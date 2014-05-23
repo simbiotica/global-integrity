@@ -1,0 +1,27 @@
+.report-header {
+  padding-top: 20px;
+}
+
+.search-bar {
+  padding: 40px 0;
+}
+
+.question-title {
+  width: 100%;
+  padding: 30px 0;
+  color: $fifth-color;
+  background-color: $report-primary-color;
+}
+
+.question-subtitle {
+  width: 100%;
+  padding: 30px 0;
+  margin-bottom: 30px;
+  background-color: $report-thirth-color;
+  border-bottom: $border-dotted;
+
+}
+
+.question-intro {
+  margin-bottom: 30px;
+}

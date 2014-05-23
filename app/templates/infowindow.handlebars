@@ -1,0 +1,17 @@
+<div class="cartodb-popup">
+  <a href="#close" class="cartodb-popup-close-button close">x</a>
+  <div class="cartodb-popup-content-wrapper">
+    <div class="cartodb-popup-header">
+      <h3>{{content.data.name}}</h3>
+    </div>
+    <div class="cartodb-popup-content">
+      <h4>Production count</h4>
+      <p>{{#xif content.data.production_count}}{{content.data.production_count}}{{else}}-{{/xif}}</p>
+      <h4>Usage count</h4>
+      <p>{{#xif content.data.usage_count}}{{content.data.usage_count}}{{else}}-{{/xif}}</p>
+      <h4>Challenge count</h4>
+      <p>{{#xif content.data.challenges}}{{content.data.challenges}}{{else}}-{{/xif}}</p>
+    </div>
+  </div>
+  <div class="cartodb-popup-tip-container"></div>
+</div>

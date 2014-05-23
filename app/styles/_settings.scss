@@ -1,0 +1,41 @@
+// Grid system
+$grid-max-width: 100%;
+$grid-min-width: 0;
+$grid-columns: 12;
+$grid-gutter-width: 1%;
+
+// Screens
+$lg: 1400px;
+$md: 900px;
+$sm: 320px;
+
+// Typography
+$site-font-family: "Open Sans", Helvetica, Arial, sans-serif;
+$site-font-size: 13px;
+$site-line-height: 1.2;
+
+// Colors
+$red: #e43700;
+$graydark: #333;
+$graylight: #eee;
+$gray: #aaa;
+$white: #fff;
+
+$report-red: #E53719;
+$report-light-grey: #EDEDED;
+$report-grey: #656565;
+
+
+// Theme colors
+$primary-color: $red;
+$secondary-color: $graydark;
+$thirth-color: $graylight;
+$fourth-color: $gray;
+$fifth-color: $white;
+
+$report-primary-color: $report-red;
+$report-secondary-color: $report-grey;
+$report-thirth-color: $report-light-grey;
+
+$border-dotted: 2px dotted $report-secondary-color;
+
