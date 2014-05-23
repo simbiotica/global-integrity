@@ -75,18 +75,20 @@ define([
     },
 
     getTargetsByQuestion: function(questionId, callback) {
-      this.getAll(function(error, model) {
-        var targets = _.where(model.toJSON().questions, {
-          id: questionId
-        })[0].targets;
+      this.getAll(function(error, collection) {
+        if (questionId && questionId !== 'all') {
+          var targets = _.where(collection.toJSON().questions, {
+            id: questionId
+          })[0].targets;
 
-        model.attributes.targets = targets;
+          collection.attributes.targets = targets;
+        }
 
         if (callback && typeof callback === 'function') {
-          callback(undefined, model);
+          callback(undefined, collection);
         }
       });
-    }
+    },
 
   });
 

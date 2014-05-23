@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    {{#each answers}}
+    {{#each questions}}
       <article>
         {{#if questiontext}}
           <header>
@@ -35,25 +35,27 @@
           </header>
         {{/if}}
 
-        <div class="search-results">
-          <section class="result">
-            <div class="row">
-              <div class="grid-1">
-                <span class="index">{{answervalue}}</span>
-              </div>
+        {{#each answers}}
+          <div class="search-results">
+            <section class="result">
+              <div class="row">
+                <div class="grid-1">
+                  <span class="index">{{answervalue}}</span>
+                </div>
 
-              <div class="grid-11">
-                <h4 class="target-title">{{targetname}}</h4>
-                {{#if answersourcedescription}}
-                  <p><strong>Source:</strong>{{answersourcedescription}}</p>
-                {{/if}}
-                {{#if answercomments}}
-                  <p><strong>Comments:</strong>{{answercomments}}</p>
-                {{/if}}
+                <div class="grid-11">
+                  <h4 class="target-title">{{targetname}}</h4>
+                  {{#if answersourcedescription}}
+                    <p><strong>Source:</strong>{{answersourcedescription}}</p>
+                  {{/if}}
+                  {{#if answercomments}}
+                    <p><strong>Comments:</strong>{{answercomments}}</p>
+                  {{/if}}
+                </div>
               </div>
-            </div>
-          </section>
-        </div>
+            </section>
+          </div>
+        {{/each}}
 
       </article>
     {{/each}}
@@ -61,5 +63,11 @@
   {{/each}}
 
 {{else}}
-  <p>No data</p>
+  <div class="question-title">
+    <div class="row">
+      <div class="grid-12">
+        <h2 class="title">No data</h2>
+      </div>
+    </div>
+  </div>
 {{/if}}
