@@ -192,6 +192,13 @@ module.exports = function(grunt) {
         ],
         tasks: ['test']
       }
+    },
+
+    'gh-pages': {
+      options: {
+        base: 'dist'
+      },
+      src: ['**']
     }
 
   });

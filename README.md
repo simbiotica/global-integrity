@@ -30,3 +30,7 @@ On production
 # Deploy
 
     bundle exec cap [staging|production] deploy
+
+# gh-pages
+
+    grunt gh-pages
