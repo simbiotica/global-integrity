@@ -27,3 +27,7 @@ FROM (
   lag(targetid) OVER (ORDER BY categoryid ASC, questionid ASC, targetid ASC) AS prev_target
     FROM export_dnorm_prod_107
 ) x
+
+%s
+
+ORDER BY categoryweight ASC, questionweight ASC,  targetname ASC

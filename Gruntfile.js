@@ -95,10 +95,6 @@ module.exports = function(grunt) {
       ]
     },
 
-    mocha_phantomjs: {
-      all: ['<%= root.test %>/index.html']
-    },
-
     requirejs: {
       options: {
         optimize: 'uglify',
@@ -192,8 +188,6 @@ module.exports = function(grunt) {
       test: {
         files: [
           '<%= root.app %>/scripts/{,*/}{,*/}*.js',
-          '<%= root.test %>/specs/{,*/}{,*/}*.js',
-          '<%= root.test %>/specRunner.js',
           'Gruntfile.js'
         ],
         tasks: ['test']
@@ -204,7 +198,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'jshint'
-    //'mocha_phantomjs'
   ]);
 
   grunt.registerTask('build', [

@@ -3,7 +3,7 @@
 require.config({
 
   paths: {
-    jquery: '../vendor/jquery/jquery',
+    jquery: '../vendor/jquery/dist/jquery',
     underscore: '../vendor/underscore/underscore',
     backbone: '../vendor/backbone/backbone',
     handlebars: '../vendor/handlebars/handlebars',
@@ -33,14 +33,16 @@ require.config({
 });
 
 require([
-  'router'
-], function(Router) {
+  'views/toolbar',
+  'views/result'
+], function(ToolbarView, ResultView) {
 
   // Extensions
   Number.prototype.toCommas = function() {
     return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  new Router();
+  new ToolbarView();
+  new ResultView();
 
 });

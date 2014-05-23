@@ -12,6 +12,7 @@
     font-weight: bold;
     color: $fifth-color;
     text-transform: uppercase;
+    border: 0;
   }
   #apply {
     @extend .btn;

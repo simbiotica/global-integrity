@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="grid-4">
+    <select name="questions" id="questionSelect" placeholder="All questions">
+      <option value="all" default>All questions</option>
+      {{#each questions}}
+        <option value="{{id}}">{{text}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="grid-4">
+    <select name="targets" id="targetSelect" placeholder="All targets">
+      <option value="all" default>All targets</option>
+      {{#each targets}}
+        <option value="{{id}}">{{text}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="grid-2">
+    <button id="apply" type="button">Apply</button>
+  </div>
+  <div class="grid-2">
+    <button id="print" type="button">Print</button>
+  </div>
+</div>
