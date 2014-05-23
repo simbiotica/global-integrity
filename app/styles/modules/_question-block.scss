@@ -25,7 +25,9 @@
     background-color: $report-primary-color;
   }
   article {
-    //border-top: $border-dotted;
+    &:last-child {
+      border-bottom: $border-dotted;
+    }
     &:first-of-type { border-top: none;}
   }
 }
