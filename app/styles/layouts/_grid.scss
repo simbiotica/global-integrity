@@ -1,0 +1,54 @@
+.row {
+  display: block;
+  margin: 0 auto;
+  max-width: $grid-max-width;
+  min-width: $grid-min-width;
+  @include clearfix;
+
+  .row {
+    margin: 0 ($grid-gutter-width * -1);
+  }
+}
+
+.report {
+  .row {
+    max-width: 800px;
+  }
+}
+
+%grid {
+  display: block;
+  float: left;
+  margin: 0 $grid-gutter-width;
+}
+
+@for $column from 1 through $grid-columns {
+  .grid-#{$column}, .grid-sm-#{$column}, .grid-md-#{$column}, .grid-lg-#{$column} {
+    @extend %grid;
+    @include grid($column);
+  }
+}
+
+@media screen and (min-width: $lg) {
+  @for $column from 1 through $grid-columns {
+    .grid-lg-#{$column} {
+      @include grid($column);
+    }
+  }
+}
+
+@media screen and (max-width: $md) {
+  @for $column from 1 through $grid-columns {
+    .grid-md-#{$column} {
+      @include grid($column);
+    }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  @for $column from 1 through $grid-columns {
+    .grid-sm-#{$column} {
+      @include grid($column);
+    }
+  }
+}
