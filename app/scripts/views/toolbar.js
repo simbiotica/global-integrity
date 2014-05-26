@@ -13,6 +13,7 @@ define([
     el: '#toolbarView',
 
     events: {
+      'click #print': 'print',
       'click #apply': 'apply',
       'change #questionSelect': 'getTargets'
     },
@@ -111,6 +112,10 @@ define([
       } else {
         this.getData();
       }
+    },
+
+    print: function() {
+      window.print();
     }
 
   });

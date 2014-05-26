@@ -28,3 +28,11 @@
     &:first-of-type { border-top: none;}
   }
 }
+
+@media print {
+  .mod-question-block .index {
+    margin-top: 10px;
+    height: auto;
+    line-height: 1.2;
+  }
+}
