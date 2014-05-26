@@ -18,7 +18,7 @@ define([
 
       function getTargets(targets) {
         return _.map(targets, function(t) {
-          var item = t.split('-');
+          var item = t.split('---');
           return {
             id: Number(item[0]),
             text: item[1]

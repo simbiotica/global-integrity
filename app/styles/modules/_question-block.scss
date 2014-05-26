@@ -24,6 +24,9 @@
     color: $fifth-color;
     background-color: $report-primary-color;
   }
+  .key {
+    text-transform: uppercase;
+  }
   article {
     &:first-of-type { border-top: none;}
   }

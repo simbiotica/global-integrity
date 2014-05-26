@@ -28,7 +28,8 @@ define([
         var categories = _.uniq(_.reject(_.map(data.rows, function(d) {
           return {
             id: d.categoryid,
-            name: d.categoryname
+            name: d.categoryname,
+            criterias: d.criterias
           };
         }), function(d) {
           return d.name === '';
@@ -61,6 +62,18 @@ define([
           });
 
           return question;
+        });
+
+        category.criterias = _.map(category.criterias, function(criteria) {
+          if (typeof criteria === 'string') {
+            var c = criteria.split('---');
+            return {
+              key: c[0],
+              value: c[1]
+            };
+          } else {
+            return criteria;
+          }
         });
 
         return category;

@@ -34,7 +34,7 @@ FROM (
 -- question+criterias SUB-select
 (SELECT questionid,
 (SELECT
-array(SELECT a.label ||'-'||a.criteria
+array(SELECT a.label ||'---'||a.criteria
       FROM export_criteria_prod_107 a
       where a.questionid = b.questionid
       )) as criterias
