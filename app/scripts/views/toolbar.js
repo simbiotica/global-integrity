@@ -13,6 +13,7 @@ define([
     el: '#toolbarView',
 
     events: {
+      'click #print': 'print',
       'click #apply': 'apply',
       'change #questionSelect': 'getTargets'
     },
@@ -63,7 +64,7 @@ define([
       var questionId = $('#questionSelect').val();
       var targetId = $('#targetSelect').val();
 
-      if (questionId !== 'all' && targetId !== 'all') {
+      if (questionId !== 'all' && targetId === 'all') {
         this.model.getTargetsByQuestion(questionId, function(error, model) {
           if (error) {
             throw error.responseText;
@@ -82,7 +83,7 @@ define([
             target: 'all'
           });
         });
-      } else if (questionId !== 'all' && targetId === 'all') {
+      } else if (questionId !== 'all' && targetId !== 'all') {
         this.model.getTargetsByQuestion(questionId, function(error, model) {
           if (error) {
             throw error.responseText;
@@ -95,9 +96,26 @@ define([
             target: targetId
           });
         });
+      } else if (questionId === 'all' && targetId !== 'all') {
+        this.model.getTargetsByQuestion(questionId, function(error, model) {
+          if (error) {
+            throw error.responseText;
+          }
+          self.render(model);
+          $('#questionSelect').val('all');
+          $('#targetSelect').val(targetId);
+          Backbone.Events.trigger('toolbar:applied', {
+            question: 'all',
+            target: targetId
+          });
+        });
       } else {
         this.getData();
       }
+    },
+
+    print: function() {
+      window.print();
     }
 
   });

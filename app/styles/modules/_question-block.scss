@@ -15,7 +15,7 @@
     display: block;
     width: 40px;
     height: 40px;
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
     border-radius: 50%;
     font-size: $site-font-size +8;
     font-weight: bold;
@@ -25,7 +25,14 @@
     background-color: $report-primary-color;
   }
   article {
-    border-top: $border-dotted;
     &:first-of-type { border-top: none;}
+  }
+}
+
+@media print {
+  .mod-question-block .index {
+    margin-top: 10px;
+    height: auto;
+    line-height: 1.2;
   }
 }

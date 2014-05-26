@@ -1,24 +1,33 @@
-<div class="row">
-  <div class="grid-4">
-    <select name="questions" id="questionSelect" placeholder="All questions">
-      <option value="all" default>All questions</option>
-      {{#each questions}}
-        <option value="{{id}}">{{text}}</option>
-      {{/each}}
-    </select>
+<div class="wrap">
+  <div class="row">
+    <div class="grid-12">
+      <p>Lorem ipsum donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed.</p>
+    </div>
   </div>
-  <div class="grid-4">
-    <select name="targets" id="targetSelect" placeholder="All targets">
-      <option value="all" default>All targets</option>
-      {{#each targets}}
-        <option value="{{id}}">{{text}}</option>
-      {{/each}}
-    </select>
-  </div>
-  <div class="grid-2">
-    <button id="apply" type="button">Apply</button>
-  </div>
-  <div class="grid-2">
-    <button id="print" type="button">Print</button>
+  <div class="row">
+    <div class="grid-4">
+      <label>1.</label>
+      <select name="questions" id="questionSelect" placeholder="All questions">
+        <option value="all" default>All questions</option>
+        {{#each questions}}
+          <option value="{{id}}">{{text}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="grid-4">
+      <label>2.</label>
+      <select name="targets" id="targetSelect" placeholder="All targets">
+        <option value="all" default>All targets</option>
+        {{#each targets}}
+          <option value="{{id}}">{{text}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="grid-2">
+      <button id="apply" type="button">Apply</button>
+    </div>
+    <div class="grid-2">
+      <button id="print" type="button">Print</button>
+    </div>
   </div>
 </div>

@@ -19,9 +19,94 @@
   margin-bottom: 30px;
   background-color: $report-thirth-color;
   border-bottom: $border-dotted;
-
 }
 
 .question-intro {
   margin-bottom: 30px;
+}
+
+@media print {
+  * {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+   a[href^="#"]:after,
+   a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group; /* h5bp.com/t */
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  h1, h2, h3, h4 {
+    margin: .5em 0;
+  }
+
+  .search-bar {
+    display: none;
+  }
+
+  .question-title {
+    border-top: $border-dotted;
+    padding-bottom: 0;
+    h2 {
+      margin-bottom: 0;
+    }
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  .result {
+    page-break-before: avoid;
+  }
+
+  .question-subtitle {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
 }

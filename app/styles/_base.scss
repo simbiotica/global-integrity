@@ -45,6 +45,12 @@ p {
   }
 }
 
+a, button, input, select, textarea {
+  &:focus {
+    outline: none;
+  }
+}
+
 .title {
   font-size: $site-font-size + 23;
   font-weight: bold;

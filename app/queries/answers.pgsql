@@ -19,7 +19,7 @@ AND questionid=prev_question
 THEN ''
 ELSE targetname
 END as targetname,
-categoryid,  answervalue, answercomments, answersourcedescription
+categoryid,  answervalue, answercomments, answersourcedescription, targetid
 FROM (
     SELECT categoryweight, categoryid, categoryname, questiontext, targetname, targetid, questionid, questionweight, answervalue, answercomments, answersourcedescription,
   lag(categoryid) OVER (ORDER BY categoryid ASC, questionid ASC, targetid ASC) AS prev_cat,

@@ -1,10 +1,12 @@
-.row {
+.wrap {
   display: block;
   margin: 0 auto;
   max-width: $grid-max-width;
   min-width: $grid-min-width;
-  @include clearfix;
+}
 
+.row {
+  @include clearfix;
   .row {
     margin: 0 ($grid-gutter-width * -1);
   }
