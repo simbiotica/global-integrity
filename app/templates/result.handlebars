@@ -2,9 +2,11 @@
 
   {{#each categories}}
     <div class="question-title">
-      <div class="row">
-        <div class="grid-12">
-          <h2 class="title">{{name}}</h2>
+      <div class="wrap">
+        <div class="row">
+          <div class="grid-12">
+            <h2 class="title">{{name}}</h2>
+          </div>
         </div>
       </div>
     </div>
@@ -14,43 +16,49 @@
         {{#if questiontext}}
           <header>
             <div class="question-subtitle">
-              <div class="row">
-                <div class="grid-12">
-                  <h3 class="subtitle">{{questiontext}}</h3>
+              <div class="wrap">
+                <div class="row">
+                  <div class="grid-12">
+                    <h3 class="subtitle">{{questiontext}}</h3>
+                  </div>
                 </div>
               </div>
             </div>
-            {{!-- <div class="question-intro">
-              <div class="row">
-                <div class="grid-12">
-                  <h4 class="target-title">Criteria</h4>
-                  <ul>
-                    <li><span>A:</span>Lorem ipsum donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed.</li>
-                    <li><span>B:</span>Lorem ipsum id dolor id nibh ultricies vehicula ut id elit. Donec sed odio dui. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</li>
-                    <li><span>C:</span>Lorem ipsum donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed.</li>
-                  </ul>
+            <div class="question-intro">
+              <div class="wrap">
+                <div class="row">
+                  <div class="grid-12">
+                    <h4 class="target-title">Criteria</h4>
+                    <ul>
+                      <li><span>A:</span> Lorem ipsum donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed.</li>
+                      <li><span>B:</span> Lorem ipsum id dolor id nibh ultricies vehicula ut id elit. Donec sed odio dui. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</li>
+                      <li><span>C:</span> Lorem ipsum donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed.</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div> --}}
+            </div>
           </header>
         {{/if}}
 
         {{#each answers}}
           <div class="search-results">
             <section class="result">
-              <div class="row">
-                <div class="grid-1">
-                  <span class="index">{{answervalue}}</span>
-                </div>
+              <div class="wrap">
+                <div class="row">
+                  <div class="grid-1">
+                    <span class="index">{{answervalue}}</span>
+                  </div>
 
-                <div class="grid-11">
-                  <h4 class="target-title">{{targetname}}</h4>
-                  {{#if answersourcedescription}}
-                    <p><strong>Source:</strong>{{answersourcedescription}}</p>
-                  {{/if}}
-                  {{#if answercomments}}
-                    <p><strong>Comments:</strong>{{answercomments}}</p>
-                  {{/if}}
+                  <div class="grid-11">
+                    <h4 class="target-title">{{targetname}}</h4>
+                    {{#if answersourcedescription}}
+                      <p><strong>Source:</strong> {{answersourcedescription}}</p>
+                    {{/if}}
+                    {{#if answercomments}}
+                      <p><strong>Comments:</strong> {{answercomments}}</p>
+                    {{/if}}
+                  </div>
                 </div>
               </div>
             </section>

@@ -24,7 +24,6 @@ define([
 
       if (!this.categories) {
         var categories = _.uniq(_.reject(_.map(data.rows, function(d) {
-          console.log(d);
           return {
             id: d.categoryid,
             name: d.categoryname
@@ -84,8 +83,6 @@ define([
       } else if (params.question === 'all' && params.target !== 'all') {
         query = sprintf(sql, 'WHERE categoryid IN (\'' + Number(params.target) + '\')');
       }
-
-      console.log(query);
 
       options = {
         data: {
