@@ -67,6 +67,7 @@ define([
           q: sql,
           format: 'json'
         },
+        reset: true,
         success: onSuccess,
         error: onError
       };

@@ -30,6 +30,8 @@ define([
     getData: function(params) {
       var self = this;
 
+      this.$el.html('');
+
       this.collection.getData(params, function(error) {
         if (error) {
           throw error.responseText;

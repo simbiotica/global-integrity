@@ -57,8 +57,11 @@ define([
         }
 
         category.questions = _.map(category.questions, function(question) {
-          question.answers = _.where(data.rows, {
+          question.answers = _.map(_.where(data.rows, {
             questionid: question.questionid
+          }), function(answer) {
+            answer.answervalue = answer.answervalue.split('.')[0];
+            return answer;
           });
 
           return question;
@@ -99,14 +102,18 @@ define([
         }
       }
 
-      if (!params) {
+      if (params) {
+        if (params.question === 'all' && params.target === 'all') {
+          query = sprintf(sql, ' ');
+        } else if (params.question !== 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'WHERE targetid IN (\'' + Number(params.target) + '\') AND questionid IN (\'' + Number(params.question) + '\')');
+        } else if (params.question !== 'all' && params.target === 'all') {
+          query = sprintf(sql, 'WHERE questionid IN (\'' + Number(params.question) + '\')');
+        } else if (params.question === 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'WHERE targetid IN (\'' + Number(params.target) + '\')');
+        }
+      } else {
         query = sprintf(sql, ' ');
-      } else if (params.question !== 'all' && params.target !== 'all') {
-        query = sprintf(sql, 'WHERE targetid IN (\'' + Number(params.target) + '\') AND questionid IN (\'' + Number(params.question) + '\')');
-      } else if (params.question !== 'all' && params.target === 'all') {
-        query = sprintf(sql, 'WHERE questionid IN (\'' + Number(params.question) + '\')');
-      } else if (params.question === 'all' && params.target !== 'all') {
-        query = sprintf(sql, 'WHERE targetid IN (\'' + Number(params.target) + '\')');
       }
 
       options = {
@@ -114,6 +121,7 @@ define([
           q: query,
           format: 'json'
         },
+        reset: true,
         success: onSuccess,
         error: onError
       };
