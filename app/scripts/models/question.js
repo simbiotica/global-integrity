@@ -28,12 +28,14 @@ define([
 
       result = {
 
-        questions: _.map(data.rows, function(d) {
+        questions: _.sortBy(_.map(data.rows, function(d) {
           return {
             id: d.questionid,
             text: d.questiontext,
             targets: getTargets(d.target_ids)
           };
+        }), function(question) {
+          return question.text;
         }),
 
         targets: _.uniq(_.flatten(_.map(data.rows, function(d) {
