@@ -64,7 +64,7 @@ define([
       }
     },
 
-    setCurrentTarget: function(e) {
+    setCurrentTarget: function() {
       var targetSelect = $('#targetSelect');
       $('#currentTarget').text(targetSelect.find('option[value="' + targetSelect.val() + '"]').text());
     },

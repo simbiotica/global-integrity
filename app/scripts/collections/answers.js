@@ -28,8 +28,7 @@ define([
         var categories = _.uniq(_.reject(_.map(data.rows, function(d) {
           return {
             id: d.categoryid,
-            name: d.categoryname,
-            criterias: d.criterias
+            name: d.categoryname
           };
         }), function(d) {
           return d.name === '';
@@ -64,19 +63,21 @@ define([
             return answer;
           });
 
-          return question;
-        });
+          question.criterias = _.map(_.where(data.rows, {
+            questionid: question.questionid
+          })[0].criterias, function(criteria) {
+            if (typeof criteria === 'string') {
+              var c = criteria.split('---');
+              return {
+                key: c[0],
+                value: c[1]
+              };
+            } else {
+              return criteria;
+            }
+          });
 
-        category.criterias = _.map(category.criterias, function(criteria) {
-          if (typeof criteria === 'string') {
-            var c = criteria.split('---');
-            return {
-              key: c[0],
-              value: c[1]
-            };
-          } else {
-            return criteria;
-          }
+          return question;
         });
 
         return category;
