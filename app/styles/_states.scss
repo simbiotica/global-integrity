@@ -12,3 +12,16 @@
     clear: both;
   }
 }
+
+.is-printable {
+  display: none;
+}
+
+@media print {
+  .is-unprintable {
+    display: none;
+  }
+  .is-printable {
+    display: block;
+  }
+}

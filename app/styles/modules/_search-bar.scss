@@ -41,3 +41,19 @@
     display: inline-block;
   }
 }
+
+.mod-search-label {
+  float: left;
+  width: 18%;
+}
+
+.mod-search-current {
+  float: right;
+  clear: right;
+  width: 77%;
+  padding: 17px 10px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  font-size: 16px;
+  border: 1px solid lighten($report-secondary-color, 30%);
+}

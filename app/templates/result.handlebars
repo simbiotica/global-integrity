@@ -1,5 +1,4 @@
 {{#if categories}}
-
   {{#each categories}}
     <div class="question-title">
       <div class="wrap">
@@ -30,7 +29,7 @@
                   <div class="grid-12">
                     <h4 class="target-title">Criteria</h4>
                     <ul>
-                      {{#each ../../criterias}}
+                      {{#each criterias}}
                         <li><span class="key">{{key}}</span> {{value}}</li>
                       {{/each}}
                     </ul>
@@ -69,7 +68,6 @@
     {{/each}}
 
   {{/each}}
-
 {{else}}
   <div class="question-title">
     <div class="row">
