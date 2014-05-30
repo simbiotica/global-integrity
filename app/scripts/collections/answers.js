@@ -63,7 +63,7 @@ define([
             return answer;
           });
 
-          question.criterias = _.map(_.where(data.rows, {
+          question.criterias = _.sortBy(_.map(_.where(data.rows, {
             questionid: question.questionid
           })[0].criterias, function(criteria) {
             if (typeof criteria === 'string') {
@@ -75,6 +75,8 @@ define([
             } else {
               return criteria;
             }
+          }), function(criteria) {
+            return criteria.key;
           });
 
           return question;
