@@ -13,10 +13,10 @@ define([
     el: '#toolbarView',
 
     events: {
-      'click #print': 'print',
       'click #apply': 'apply',
       'change #questionSelect': 'getTargets',
-      'change #targetSelect': 'setCurrentTarget'
+      'change #targetSelect': 'setCurrentTarget',
+      'change #toggleCriteria': 'toggleCriteria'
     },
 
     template: Handlebars.compile(tpl),
@@ -156,8 +156,8 @@ define([
       }
     },
 
-    print: function() {
-      window.print();
+    toggleCriteria: function() {
+      $('.question-intro').toggleClass('is-hidden');
     }
 
   });

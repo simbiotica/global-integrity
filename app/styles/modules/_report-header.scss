@@ -2,8 +2,22 @@
   img { float: left;}
   h1 {
     float: right;
-    margin-top: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     font-size: 48px;
     line-height: 48px;
+  }
+}
+
+#printBtn {
+  float: right;
+  clear: right;
+  border: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  background: image-url("print-icon_15x13.svg") no-repeat left;
+  background-size: 15px 13px;
+  &:hover {
+    text-decoration: underline;
   }
 }

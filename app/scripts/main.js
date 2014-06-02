@@ -42,6 +42,10 @@ require([
     return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
+  document.getElementById('printBtn').onclick = function() {
+    window.print();
+  };
+
   new ToolbarView();
   new ResultView();
 
