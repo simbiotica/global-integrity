@@ -38,10 +38,12 @@ define([
           return question.text;
         }),
 
-        targets: _.uniq(_.flatten(_.map(data.rows, function(d) {
+        targets: _.sortBy(_.uniq(_.flatten(_.map(data.rows, function(d) {
           return getTargets(d.target_ids);
         }), true), false, function(d) {
           return d.id;
+        }), function(target) {
+          return target.text;
         })
 
       };
