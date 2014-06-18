@@ -45,32 +45,25 @@ define([
     },
 
     getTargets: function() {
-      /*var self = this;
-      var questionId = $('#questionSelect').val();
-
-      if (questionId !== 'all') {
-        this.model.getTargetsByQuestion(questionId, function(error, model) {
-          if (error) {
-            throw error.responseText;
-          }
-          self.render(model);
-          var questionSelect = $('#questionSelect');
-          var targetSelect = $('#targetSelect');
-          questionSelect.val(questionId);
-          targetSelect.val('all');
-          $('#currentQuestion').text(questionSelect.find('option[value="' + questionId + '"]').text());
-          $('#currentTarget').text('All targets');
-        });
-      } else {*/
-        this.getData();
-      //}
+      this.getData();
     },
 
     setCurrentTarget: function() {
       var targetSelect = $('#targetSelect');
       $('#currentTarget').text(targetSelect.find('option[value="' + targetSelect.val() + '"]').text());
-      this.targetId = targetSelect.val();
-      console.log(this.targetId);
+      this.targetId = targetSelect.find('option[value="' + targetSelect.val() + '"]').text()
+      this.setQuestionsByTarget(this.targetId);
+    },
+
+    setQuestionsByTarget: function(targetId) {
+        var self = this;
+
+        this.model.getQuestionsByTarget(function(error) {
+          if(error){
+            throw error.responseText;
+          }
+          self.render();
+        })
     },
 
     apply: function() {

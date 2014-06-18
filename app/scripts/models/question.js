@@ -79,6 +79,25 @@ define([
       this.fetch(options);
     },
 
+    // Set questions by target
+    getQuestionsByTarget: function(targetId, callback) {
+      this.getAll(function(error, collection) {
+        console.log(collection.toJSON());
+        var questions = _.where(collection.toJSON().questions, {
+          //targets.id: targetId
+        });
+
+        console.log(questions);
+        collection.attributes.questions = questions;
+
+
+        if (callback && typeof callback === 'function') {
+          callback(undefined, collection);
+        }
+      });
+    },
+
+    // Set targets by question
     getTargetsByQuestion: function(questionId, callback) {
       this.getAll(function(error, collection) {
         if (questionId && questionId !== 'all') {
