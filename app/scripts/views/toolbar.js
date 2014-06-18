@@ -31,6 +31,14 @@ define([
 
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));
+
+      var criteria = window.localStorage.getItem('criteria');
+
+      if (criteria === 'true') {
+        $('#toggleCriteria').attr('checked', 'checked');
+      } else {
+        $('#toggleCriteria').removeAttr('checked');
+      }
     },
 
     getData: function() {
@@ -160,7 +168,8 @@ define([
       }
     },
 
-    toggleCriteria: function() {
+    toggleCriteria: function(ev) {
+      window.localStorage.setItem('criteria', $(ev.currentTarget).prop('checked'));
       $('.question-intro').toggleClass('is-hidden');
     }
 
