@@ -16,7 +16,6 @@ define([
     collection: new DataCollection(),
 
     initialize: function() {
-      this.getData();
       Backbone.Events.on('toolbar:applied', this.getData, this);
     },
 

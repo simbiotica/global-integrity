@@ -14,8 +14,9 @@ define([
 
     events: {
       'click #apply': 'apply',
-      'change #questionSelect': 'getTargets',
+      //'change #questionSelect': 'getTargets',
       'change #targetSelect': 'setCurrentTarget',
+      //'change #targetSelect': 'setQuestionsByTarget',
       'change #toggleCriteria': 'toggleCriteria'
     },
 
@@ -24,6 +25,7 @@ define([
     model: new Datamodel(),
 
     initialize: function() {
+      this.targetId;
       this.getData();
     },
 
@@ -43,7 +45,7 @@ define([
     },
 
     getTargets: function() {
-      var self = this;
+      /*var self = this;
       var questionId = $('#questionSelect').val();
 
       if (questionId !== 'all') {
@@ -59,14 +61,16 @@ define([
           $('#currentQuestion').text(questionSelect.find('option[value="' + questionId + '"]').text());
           $('#currentTarget').text('All targets');
         });
-      } else {
+      } else {*/
         this.getData();
-      }
+      //}
     },
 
     setCurrentTarget: function() {
       var targetSelect = $('#targetSelect');
       $('#currentTarget').text(targetSelect.find('option[value="' + targetSelect.val() + '"]').text());
+      this.targetId = targetSelect.val();
+      console.log(this.targetId);
     },
 
     apply: function() {
