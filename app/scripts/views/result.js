@@ -19,8 +19,8 @@ define([
       Backbone.Events.on('toolbar:applied', this.getData, this);
     },
 
-    render: function() {
-      var data = this.collection.toJSON();
+    render: function(collection) {
+      var data = collection.toJSON();
       this.$el.html(this.template({
         categories: (data.length === 0) ? null : data
       }));
@@ -31,11 +31,11 @@ define([
 
       this.$el.html('');
 
-      this.collection.getData(params, function(error) {
+      this.collection.getData(params, function(error, collection) {
         if (error) {
           throw error.responseText;
         }
-        self.render();
+        self.render(collection);
       });
     }
 

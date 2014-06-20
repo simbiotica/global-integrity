@@ -100,12 +100,23 @@ define([
 
     getTargetsByQuestion: function(questionId, callback) {
       this.getAll(function(error, model) {
+        var questions;
+
         if (questionId && questionId !== 'all') {
           var targets = _.where(model.toJSON().questions, {
             id: Number(questionId)
           })[0].targets;
 
+          if (targets.length !== 0) {
+            questions = _.uniq(_.filter(model.toJSON().questions, function(question) {
+              return _.where(question.targets, {id: Number(targets[0].id)}).length > 0;
+            }), false, function(question) {
+              return question.id;
+            });
+          }
+          
           model.attributes.targets = targets;
+          model.attributes.questions = questions || [];
         }
 
         if (callback && typeof callback === 'function') {
