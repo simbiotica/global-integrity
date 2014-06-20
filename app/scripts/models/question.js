@@ -4,8 +4,9 @@ define([
   'underscore',
   'backbone',
   'sprintf',
-  'text!../../queries/questions.pgsql'
-], function(_, Backbone, sprintf, sql) {
+  'text!../../queries/questions.pgsql',
+  'text!../../queries/answers-by-question.pgsql'
+], function(_, Backbone, sprintf, sql, answerByQuestion) {
 
   sprintf = sprintf.sprintf;
 
@@ -17,7 +18,9 @@ define([
       var result;
 
       function getTargets(targets) {
+        //console.log(targets);
         return _.map(targets, function(t) {
+
           var item = t.split('---');
           return {
             id: Number(item[0]),
@@ -32,7 +35,7 @@ define([
           return {
             id: d.questionid,
             text: d.questiontext,
-            targets: getTargets(d.target_ids)
+            targets: getTargets(d.targetname)
           };
         }), function(question) {
           return question.text;
@@ -45,8 +48,9 @@ define([
         }), function(target) {
           return target.text;
         })
-
       };
+
+      console.log(result);
 
       return result;
     },
@@ -81,20 +85,34 @@ define([
 
     // Set questions by target
     getQuestionsByTarget: function(targetId, callback) {
-      this.getAll(function(error, collection) {
-        console.log(collection.toJSON());
-        var questions = _.where(collection.toJSON().questions, {
-          //targets.id: targetId
-        });
+      var options,
+          condition;
 
-        console.log(questions);
-        collection.attributes.questions = questions;
-
-
+      function onSuccess(model) {
         if (callback && typeof callback === 'function') {
-          callback(undefined, collection);
+          callback(undefined, model);
         }
-      });
+      }
+
+      function onError(model, err) {
+        if (callback && typeof callback === 'function') {
+          callback(err);
+        }
+      }
+
+      condition = ' WHERE targetid::integer = ' + targetId;
+
+      options = {
+        data: {
+          q: sprintf(answerByQuestion, condition),
+          format: 'json'
+        },
+        reset: true,
+        success: onSuccess,
+        error: onError
+      };
+
+      this.fetch(options);
     },
 
     // Set targets by question
