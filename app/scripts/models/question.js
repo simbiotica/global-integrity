@@ -6,7 +6,7 @@ define([
   'sprintf',
   'text!../../queries/questions.pgsql',
   'text!../../queries/answers-by-question.pgsql'
-], function(_, Backbone, sprintf, sql, answerByQuestion) {
+], function(_, Backbone, sprintf, sql) {
 
   sprintf = sprintf.sprintf;
 
@@ -17,14 +17,13 @@ define([
     parse: function(data) {
       var result;
 
-      function getTargets(targets) {
-        //console.log(targets);
-        return _.map(targets, function(t) {
-
+      function getTargets(question) {
+        return _.map(question.target_ids, function(t) {
           var item = t.split('---');
           return {
             id: Number(item[0]),
-            text: item[1]
+            text: item[1],
+            question: Number(question.questionid)
           };
         });
       }
@@ -33,24 +32,23 @@ define([
 
         questions: _.sortBy(_.map(data.rows, function(d) {
           return {
-            id: d.questionid,
+            id: Number(d.questionid),
             text: d.questiontext,
-            targets: getTargets(d.targetname)
+            targets: getTargets(d)
           };
         }), function(question) {
           return question.text;
         }),
 
         targets: _.sortBy(_.uniq(_.flatten(_.map(data.rows, function(d) {
-          return getTargets(d.target_ids);
+          return getTargets(d);
         }), true), false, function(d) {
           return d.id;
         }), function(target) {
           return target.text;
         })
-      };
 
-      console.log(result);
+      };
 
       return result;
     },
@@ -83,54 +81,39 @@ define([
       this.fetch(options);
     },
 
-    // Set questions by target
     getQuestionsByTarget: function(targetId, callback) {
-      var options,
-          condition;
+      this.getAll(function(error, model) {
+        if (targetId && targetId !== 'all') {
+          var questions = _.uniq(_.filter(model.toJSON().questions, function(question) {
+            return _.where(question.targets, {id: Number(targetId)}).length > 0;
+          }), false, function(question) {
+            return question.id;
+          });
 
-      function onSuccess(model) {
-        if (callback && typeof callback === 'function') {
-          callback(undefined, model);
-        }
-      }
-
-      function onError(model, err) {
-        if (callback && typeof callback === 'function') {
-          callback(err);
-        }
-      }
-
-      condition = ' WHERE targetid::integer = ' + targetId;
-
-      options = {
-        data: {
-          q: sprintf(answerByQuestion, condition),
-          format: 'json'
-        },
-        reset: true,
-        success: onSuccess,
-        error: onError
-      };
-
-      this.fetch(options);
-    },
-
-    // Set targets by question
-    getTargetsByQuestion: function(questionId, callback) {
-      this.getAll(function(error, collection) {
-        if (questionId && questionId !== 'all') {
-          var targets = _.where(collection.toJSON().questions, {
-            id: questionId
-          })[0].targets;
-
-          collection.attributes.targets = targets;
+          model.attributes.questions = questions;
         }
 
         if (callback && typeof callback === 'function') {
-          callback(undefined, collection);
+          callback(error, model);
         }
       });
     },
+
+    getTargetsByQuestion: function(questionId, callback) {
+      this.getAll(function(error, model) {
+        if (questionId && questionId !== 'all') {
+          var targets = _.where(model.toJSON().questions, {
+            id: Number(questionId)
+          })[0].targets;
+
+          model.attributes.targets = targets;
+        }
+
+        if (callback && typeof callback === 'function') {
+          callback(error, model);
+        }
+      });
+    }
 
   });
 
