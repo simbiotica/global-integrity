@@ -58,5 +58,5 @@ GROUP BY questionid, criterias
 -- ORDER BY targetid
 ) criterias
 
-where dnorm.questionid = criterias.questionid
+where dnorm.questionid = criterias.questionid %s
 order by targetid, categoryweight ASC, questionweight ASC,  questiontext desc
