@@ -4,8 +4,7 @@ define([
   'underscore',
   'backbone',
   'sprintf',
-  'text!../../queries/questions.pgsql',
-  'text!../../queries/answers-by-question.pgsql'
+  'text!../../queries/questions.pgsql'
 ], function(_, Backbone, sprintf, sql) {
 
   sprintf = sprintf.sprintf;
