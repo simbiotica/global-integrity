@@ -20,7 +20,7 @@ AND dnorm.questionid=prev_question
 THEN ''
 ELSE targetname
 END as targetname,
-categoryid,  answervalue, answercomments,
+categoryid, answervalue, answercomments,
 answersourcedescription
 FROM (
     SELECT categoryweight, categoryid, categoryname, questiontext, targetname, targetid, questionid, questionweight, answervalue, answercomments, answersourcedescription,
