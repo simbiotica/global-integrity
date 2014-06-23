@@ -80,14 +80,21 @@ define([
       this.fetch(options);
     },
 
+
     getQuestionsByTarget: function(targetId, callback) {
+
+      // Storage target's id
       this.getAll(function(error, model) {
-        if (targetId && targetId !== 'all') {
-          var questions = _.uniq(_.filter(model.toJSON().questions, function(question) {
-            return _.where(question.targets, {id: Number(targetId)}).length > 0;
-          }), false, function(question) {
-            return question.id;
-          });
+        if (targetId) {
+          var questions;
+
+          for (var i = 0; i < targetId.length; i++) {
+            questions = _.uniq(_.filter(model.toJSON().questions, function(question) {
+              return _.where(question.targets, {id: Number(targetId[i])}).length > 0;
+            }), false, function(question) {
+              return question.id;
+            });
+          }
 
           model.attributes.questions = questions;
         }
@@ -114,7 +121,7 @@ define([
               return question.id;
             });
           }
-          
+
           model.attributes.targets = targets;
           model.attributes.questions = questions || [];
         }

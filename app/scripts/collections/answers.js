@@ -84,6 +84,7 @@ define([
           return question.questionid;
         });
 
+
         return category;
       }), function(category) {
         return category.questions.length === 0;
@@ -139,7 +140,20 @@ define([
         if (params.question === 'all' && params.target === 'all') {
           query = sprintf(sql, ' ');
         } else if (params.question !== 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'AND targetid IN (\'' + Number(params.target) + '\') AND dnorm.questionid IN (\'' + Number(params.question) + '\') ');
+
+          var ids = '(';
+          for (var i = 0; i < params.target.length; i++) {
+
+            if(i === params.target.length - 1) {
+              ids += '\'' + params.target[i] + '\'';
+            } else {
+                ids += '\'' + params.target[i] + '\',';
+            }
+          }
+
+          ids += ')';
+
+          query = sprintf(sql, 'AND targetid IN ' + ids + ' AND dnorm.questionid IN (\'' + Number(params.question) + '\') ');
         } else if (params.question !== 'all' && params.target === 'all') {
           query = sprintf(sql, 'AND dnorm.questionid IN (\'' + Number(params.question) + '\')');
         } else if (params.question === 'all' && params.target !== 'all') {
@@ -148,7 +162,7 @@ define([
       } else {
         query = sprintf(sql, ' ');
       }
-
+      
       options = {
         data: {
           q: query,

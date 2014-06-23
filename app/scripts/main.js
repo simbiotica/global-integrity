@@ -8,7 +8,8 @@ require.config({
     backbone: '../vendor/backbone/backbone',
     handlebars: '../vendor/handlebars/handlebars',
     text: '../vendor/requirejs-text/text',
-    sprintf: '../vendor/sprintf/src/sprintf'
+    sprintf: '../vendor/sprintf/src/sprintf',
+    select2: '../vendor/select2-amd/select2'
   },
 
   shim: {
@@ -27,6 +28,10 @@ require.config({
     },
     sprintf: {
       exports: 'sprintf'
+    },
+    select2: {
+      deps: ['jquery'],
+      exports: 'Select2'
     }
   }
 

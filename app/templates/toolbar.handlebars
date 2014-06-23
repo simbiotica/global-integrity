@@ -8,8 +8,8 @@
     <div class="row">
       <div class="grid-4">
         <label>1.</label>
-        <select name="targets" id="targetSelect" placeholder="All targets">
-          <option value="all" default>Select targets</option>
+        <select name="targets" id="targetSelect" multiple="multiple" data-placeholder="All targets">
+          <!--<option value="all" default>Select targets</option>-->
           {{#each targets}}
             <option value="{{id}}">{{text}}</option>
           {{/each}}
