@@ -122,7 +122,7 @@ define([
     },
 
     getData: function(params, callback) {
-      var options, query, self = this;
+      var options;
 
       function onSuccess(collection) {
         if (callback && typeof callback === 'function') {
@@ -136,36 +136,9 @@ define([
         }
       }
 
-      if (params) {
-        if (params.question === 'all' && params.target === 'all') {
-          query = sprintf(sql, ' ');
-        } else if (params.question !== 'all' && params.target !== 'all') {
-
-          var ids = '(';
-          for (var i = 0; i < params.target.length; i++) {
-
-            if(i === params.target.length - 1) {
-              ids += '\'' + params.target[i] + '\'';
-            } else {
-                ids += '\'' + params.target[i] + '\',';
-            }
-          }
-
-          ids += ')';
-
-          query = sprintf(sql, 'AND targetid IN ' + ids + ' AND dnorm.questionid IN (\'' + Number(params.question) + '\') ');
-        } else if (params.question !== 'all' && params.target === 'all') {
-          query = sprintf(sql, 'AND dnorm.questionid IN (\'' + Number(params.question) + '\')');
-        } else if (params.question === 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'AND targetid IN (\'' + Number(params.target) + '\')');
-        }
-      } else {
-        query = sprintf(sql, ' ');
-      }
-      
       options = {
         data: {
-          q: query,
+          q: this.getQuery(params),
           format: 'json'
         },
         reset: true,
@@ -173,16 +146,29 @@ define([
         error: onError
       };
 
-      if (!this.data) {
-        this.getAll(function(err) {
-          if (err) {
-            throw err.responseText;
-          }
-          self.fetch(options);
-        });
+      this.fetch(options);
+    },
+
+    getQuery: function(params) {
+      var query;
+
+      if (params) {
+        if (params.question === 'all' && params.target === 'all') {
+          query = sprintf(sql, ' ');
+        } else if (params.question !== 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'AND targetid IN (\'' + (params.target).toString() + '\') AND criterias.questionid IN (\'' + (params.question).toString() + '\')');
+        } else if (params.question !== 'all' && params.target === 'all') {
+          query = sprintf(sql, 'AND criterias.questionid IN (\'' + (params.question).toString() + '\')');
+        } else if (params.question === 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'AND targetid IN (\'' + (params.target).toString() + '\')');
+        }
       } else {
-        this.fetch(options);
+        query = sprintf(sql, ' ');
       }
+
+      console.log(query);
+
+      return query;
     }
 
   });

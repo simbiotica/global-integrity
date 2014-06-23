@@ -80,23 +80,24 @@ define([
       this.fetch(options);
     },
 
-
-    getQuestionsByTarget: function(targetId, callback) {
-
-      // Storage target's id
+    getQuestionsByTargets: function(targets, callback) {
       this.getAll(function(error, model) {
-        if (targetId) {
-          var questions;
+        if (targets && targets.length > 0) {
+          var questions = [];
 
-          for (var i = 0; i < targetId.length; i++) {
-            questions = _.uniq(_.filter(model.toJSON().questions, function(question) {
-              return _.where(question.targets, {id: Number(targetId[i])}).length > 0;
-            }), false, function(question) {
-              return question.id;
+          _.each(targets, function(targetId) {
+            var result = _.filter(model.toJSON().questions, function(question) {
+              return _.where(question.targets, {
+                id: Number(targetId)
+              }).length > 0;
             });
-          }
 
-          model.attributes.questions = questions;
+            questions.push(result);
+          });
+
+          model.attributes.questions = _.uniq(_.flatten(questions), false, function(question) {
+            return question.id;
+          });
         }
 
         if (callback && typeof callback === 'function') {
