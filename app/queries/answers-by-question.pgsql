@@ -27,7 +27,7 @@ FROM (
   lag(categoryid) OVER (ORDER BY categoryid ASC, questionid ASC, targetid ASC) AS prev_cat,
   lag(questionid) OVER (ORDER BY categoryid ASC, questionid ASC, targetid ASC) AS prev_question,
   lag(targetid) OVER (ORDER BY categoryid ASC, questionid ASC, targetid ASC) AS prev_target
-    FROM export_dnorm_prod_107
+    FROM export_dnorm_prod_2
     %s
 ) dnorm,
 

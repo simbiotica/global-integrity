@@ -42,7 +42,7 @@ FROM (
   lag(targetid) OVER
   (ORDER BY categoryname desc, targetid ASC, categoryweight DESC, questionweight ASC) AS prev_target
 
-  FROM export_dnorm_prod_107
+  FROM export_dnorm_prod_2
 ORDER BY targetname, categoryweight asc, questionweight asc, questiontext asc
 ) dnorm,
 
