@@ -56,11 +56,13 @@ define([
         }
 
         category.questions = _.uniq(_.map(category.questions, function(question) {
-          question.answers = _.map(_.where(data.rows, {
+          question.answers = _.sortBy(_.map(_.where(data.rows, {
             questionid: question.questionid
           }), function(answer) {
             answer.answervalue = answer.answervalue.split('.')[0];
             return answer;
+          }), function(answer) {
+            return answer.targetname;
           });
 
           question.criterias = _.sortBy(_.map(_.where(data.rows, {
