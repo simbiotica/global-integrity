@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-  'underscore',
+  '_string',
   'backbone',
   'handlebars',
   'select2',
@@ -27,6 +27,7 @@ define([
     initialize: function() {
       this.targetId;
       this.questionId;
+      this.criteria = window.localStorage.getItem('criteria') === 'true';
 
       this.getData();
     },
@@ -34,9 +35,7 @@ define([
     render: function(model) {
       this.$el.html(this.template(model.toJSON()));
 
-      var criteria = window.localStorage.getItem('criteria');
-
-      if (criteria === 'true') {
+      if (this.criteria) {
         $('#toggleCriteria').attr('checked', 'checked');
       } else {
         $('#toggleCriteria').removeAttr('checked');
@@ -110,13 +109,19 @@ define([
           if (error) {
             throw error.responseText;
           }
+
           self.render(model);
           questionSelect = $('#questionSelect');
           targetSelect = $('#targetSelect');
           questionSelect.val('all');
           targetSelect.select2('val', targetsId);
-          // $('#currentTarget').text(targetSelect.find('option[value="' + targetId + '"]').text());
-          // $('#currentQuestion').text('All targets');
+
+          var currentTargets = _.map(targetsId, function(targetId) {
+            return targetSelect.find('option[value="' + targetId + '"]').text();
+          });
+
+          $('#currentTarget').text(_.str.toSentence(currentTargets));
+          $('#currentQuestion').text('All targets');
         });
       } else {
         this.getData();
@@ -135,7 +140,8 @@ define([
 
     toggleCriteria: function(ev) {
       window.localStorage.setItem('criteria', $(ev.currentTarget).prop('checked'));
-      $('.question-intro').toggleClass('is-hidden');
+      this.criteria = window.localStorage.getItem('criteria') === 'true';
+      Backbone.Events.trigger('criteria:change', this.criteria);
     }
 
   });

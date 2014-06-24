@@ -17,6 +17,7 @@ define([
 
     initialize: function() {
       Backbone.Events.on('toolbar:applied', this.getData, this);
+      Backbone.Events.on('criteria:change', this.toggleIntro, this);
     },
 
     render: function(collection) {
@@ -24,6 +25,7 @@ define([
       this.$el.html(this.template({
         categories: (data.length === 0) ? null : data
       }));
+      this.toggleIntro();
     },
 
     getData: function(params) {
@@ -37,6 +39,18 @@ define([
         }
         self.render(collection);
       });
+    },
+
+    toggleIntro: function(criteria) {
+      if (criteria === undefined) {
+        criteria = window.localStorage.getItem('criteria') === 'true';
+      }
+
+      if (criteria) {
+        $('.question-intro').removeClass('is-hidden');
+      } else {
+        $('.question-intro').addClass('is-hidden');
+      }
     }
 
   });
