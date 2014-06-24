@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-  'underscore',
+  '_string',
   'backbone',
   'sprintf',
   'models/answer',
@@ -151,22 +151,44 @@ define([
 
     getQuery: function(params) {
       var query;
+      var targets = '';
+      var questions = '';
+      var tlen = params.target.length;
+      var qlen = params.question.length;
+
+      if (params.target !== 'all') {
+        _.each(params.target, function(t, i) {
+          if (i === tlen -1) {
+            targets += '\'' + t +'\'';
+          } else {
+            targets += '\'' + t +'\',';
+          }
+        });
+      }
+
+      if (params.question !== 'all') {
+        _.each(params.question, function(q, i) {
+          if (i === qlen -1) {
+            questions += '\'' + q +'\'';
+          } else {
+            questions += '\'' + q +'\',';
+          }
+        });
+      }
 
       if (params) {
         if (params.question === 'all' && params.target === 'all') {
           query = sprintf(sql, ' ');
         } else if (params.question !== 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'AND targetid IN (\'' + (params.target).toString() + '\') AND criterias.questionid IN (\'' + (params.question).toString() + '\')');
+          query = sprintf(sql, 'AND targetid IN (' + targets + ') AND criterias.questionid IN (' + questions + ')');
         } else if (params.question !== 'all' && params.target === 'all') {
-          query = sprintf(sql, 'AND criterias.questionid IN (\'' + (params.question).toString() + '\')');
+          query = sprintf(sql, 'AND criterias.questionid IN (' + questions + ')');
         } else if (params.question === 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'AND targetid IN (\'' + (params.target).toString() + '\')');
+          query = sprintf(sql, 'AND targetid IN (' + targets + ')');
         }
       } else {
         query = sprintf(sql, ' ');
       }
-
-      console.log(query);
 
       return query;
     }

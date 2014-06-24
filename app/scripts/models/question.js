@@ -82,9 +82,9 @@ define([
 
     getQuestionsByTargets: function(targets, callback) {
       this.getAll(function(error, model) {
-        if (targets && targets.length > 0) {
-          var questions = [];
+        var questions = [];
 
+        if (targets && targets.length > 0) {
           _.each(targets, function(targetId) {
             var result = _.filter(model.toJSON().questions, function(question) {
               return _.where(question.targets, {
@@ -94,11 +94,11 @@ define([
 
             questions.push(result);
           });
-
-          model.attributes.questions = _.uniq(_.flatten(questions), false, function(question) {
-            return question.id;
-          });
         }
+
+        model.attributes.questions = _.uniq(_.flatten(questions), false, function(question) {
+          return question.id;
+        });
 
         if (callback && typeof callback === 'function') {
           callback(error, model);

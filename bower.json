@@ -24,6 +24,7 @@
     "sprintf": "~1.0.0",
     "spinjs": "~2.0.0",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
-    "select2": "~3.5.0"
+    "select2": "~3.5.0",
+    "underscore.string": "~2.3.3"
   }
 }

@@ -10,7 +10,7 @@ require.config({
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
     select2: '../vendor/select2/select2',
-    chosen: '../vendor/chosen/chosen.jquery'
+    _string: '../vendor/underscore.string/dist/underscore.string.min'
   },
 
   shim: {
@@ -30,13 +30,13 @@ require.config({
     sprintf: {
       exports: 'sprintf'
     },
-    chosen: {
-      deps: ['jquery'],
-      exports: '$'
-    },
     select2: {
       deps: ['jquery'],
       exports: '$'
+    },
+    _string: {
+      deps: ['underscore'],
+      exports: '_'
     }
   }
 

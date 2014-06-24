@@ -4,11 +4,10 @@ define([
   'underscore',
   'backbone',
   'handlebars',
-  'chosen',
+  'select2',
   'models/question',
-  'text!../../templates/toolbar.handlebars',
-  'select2'
-], function(_, Backbone, Handlebars, chosen, Datamodel, tpl) {
+  'text!../../templates/toolbar.handlebars'
+], function(_, Backbone, Handlebars, $, QuestionModel, tpl) {
 
   var ToolbarView = Backbone.View.extend({
 
@@ -23,7 +22,7 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    model: new Datamodel(),
+    model: new QuestionModel(),
 
     initialize: function() {
       this.targetId;
@@ -43,7 +42,6 @@ define([
         $('#toggleCriteria').removeAttr('checked');
       }
 
-      //this.$el.find('select').chosen();
       this.$el.find('select').select2({
         width: 'element'
       });
