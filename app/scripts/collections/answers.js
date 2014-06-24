@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-  'underscore',
+  '_string',
   'backbone',
   'sprintf',
   'models/answer',
@@ -42,7 +42,7 @@ define([
       var result = _.reject(_.map(this.categories, function(category) {
 
         category.questions = _.where(data.rows, {
-          categoryid: category.id,
+          categoryid: category.id
         });
 
         if (category.questions.length > 1) {
@@ -55,7 +55,7 @@ define([
           });
         }
 
-        category.questions = _.map(category.questions, function(question) {
+        category.questions = _.uniq(_.map(category.questions, function(question) {
           question.answers = _.map(_.where(data.rows, {
             questionid: question.questionid
           }), function(answer) {
@@ -67,7 +67,7 @@ define([
             questionid: question.questionid
           })[0].criterias, function(criteria) {
             if (typeof criteria === 'string') {
-              var c = criteria.split('---');
+              var c = criteria.split('|');
               return {
                 key: c[0],
                 value: c[1]
@@ -80,7 +80,10 @@ define([
           });
 
           return question;
+        }), false, function(question) {
+          return question.questionid;
         });
+
 
         return category;
       }), function(category) {
@@ -90,8 +93,8 @@ define([
       return result;
     },
 
-    getData: function(params, callback) {
-      var options, query;
+    getAll: function(callback) {
+      var options;
 
       function onSuccess(collection) {
         if (callback && typeof callback === 'function') {
@@ -105,23 +108,9 @@ define([
         }
       }
 
-      if (params) {
-        if (params.question === 'all' && params.target === 'all') {
-          query = sprintf(sql, ' ');
-        } else if (params.question !== 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'WHERE targetid IN (\'' + Number(params.target) + '\') AND questionid IN (\'' + Number(params.question) + '\')');
-        } else if (params.question !== 'all' && params.target === 'all') {
-          query = sprintf(sql, 'WHERE questionid IN (\'' + Number(params.question) + '\')');
-        } else if (params.question === 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'WHERE targetid IN (\'' + Number(params.target) + '\')');
-        }
-      } else {
-        query = sprintf(sql, ' ');
-      }
-
       options = {
         data: {
-          q: query,
+          q: sprintf(sql, ' '),
           format: 'json'
         },
         reset: true,
@@ -130,6 +119,78 @@ define([
       };
 
       this.fetch(options);
+    },
+
+    getData: function(params, callback) {
+      var options;
+
+      function onSuccess(collection) {
+        if (callback && typeof callback === 'function') {
+          callback(undefined, collection);
+        }
+      }
+
+      function onError(collection, err) {
+        if (callback && typeof callback === 'function') {
+          callback(err);
+        }
+      }
+
+      options = {
+        data: {
+          q: this.getQuery(params),
+          format: 'json'
+        },
+        reset: true,
+        success: onSuccess,
+        error: onError
+      };
+
+      this.fetch(options);
+    },
+
+    getQuery: function(params) {
+      var query;
+      var targets = '';
+      var questions = '';
+      var tlen = params.target.length;
+      var qlen = params.question.length;
+
+      if (params.target !== 'all') {
+        _.each(params.target, function(t, i) {
+          if (i === tlen -1) {
+            targets += '\'' + t +'\'';
+          } else {
+            targets += '\'' + t +'\',';
+          }
+        });
+      }
+
+      if (params.question !== 'all') {
+        _.each(params.question, function(q, i) {
+          if (i === qlen -1) {
+            questions += '\'' + q +'\'';
+          } else {
+            questions += '\'' + q +'\',';
+          }
+        });
+      }
+
+      if (params) {
+        if (params.question === 'all' && params.target === 'all') {
+          query = sprintf(sql, ' ');
+        } else if (params.question !== 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'AND targetid IN (' + targets + ') AND criterias.questionid IN (' + questions + ')');
+        } else if (params.question !== 'all' && params.target === 'all') {
+          query = sprintf(sql, 'AND criterias.questionid IN (' + questions + ')');
+        } else if (params.question === 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'AND targetid IN (' + targets + ')');
+        }
+      } else {
+        query = sprintf(sql, ' ');
+      }
+
+      return query;
     }
 
   });
