@@ -80,17 +80,25 @@ define([
       this.fetch(options);
     },
 
-    getQuestionsByTarget: function(targetId, callback) {
+    getQuestionsByTargets: function(targets, callback) {
       this.getAll(function(error, model) {
-        if (targetId && targetId !== 'all') {
-          var questions = _.uniq(_.filter(model.toJSON().questions, function(question) {
-            return _.where(question.targets, {id: Number(targetId)}).length > 0;
-          }), false, function(question) {
-            return question.id;
-          });
+        var questions = [];
 
-          model.attributes.questions = questions;
+        if (targets && targets.length > 0) {
+          _.each(targets, function(targetId) {
+            var result = _.filter(model.toJSON().questions, function(question) {
+              return _.where(question.targets, {
+                id: Number(targetId)
+              }).length > 0;
+            });
+
+            questions.push(result);
+          });
         }
+
+        model.attributes.questions = _.uniq(_.flatten(questions), false, function(question) {
+          return question.id;
+        });
 
         if (callback && typeof callback === 'function') {
           callback(error, model);
@@ -114,7 +122,7 @@ define([
               return question.id;
             });
           }
-          
+
           model.attributes.targets = targets;
           model.attributes.questions = questions || [];
         }

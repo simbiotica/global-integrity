@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-  'underscore',
+  '_string',
   'backbone',
   'sprintf',
   'models/answer',
@@ -84,6 +84,7 @@ define([
           return question.questionid;
         });
 
+
         return category;
       }), function(category) {
         return category.questions.length === 0;
@@ -121,7 +122,7 @@ define([
     },
 
     getData: function(params, callback) {
-      var options, query, self = this;
+      var options;
 
       function onSuccess(collection) {
         if (callback && typeof callback === 'function') {
@@ -135,23 +136,9 @@ define([
         }
       }
 
-      if (params) {
-        if (params.question === 'all' && params.target === 'all') {
-          query = sprintf(sql, ' ');
-        } else if (params.question !== 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'AND targetid IN (\'' + Number(params.target) + '\') AND dnorm.questionid IN (\'' + Number(params.question) + '\') ');
-        } else if (params.question !== 'all' && params.target === 'all') {
-          query = sprintf(sql, 'AND dnorm.questionid IN (\'' + Number(params.question) + '\')');
-        } else if (params.question === 'all' && params.target !== 'all') {
-          query = sprintf(sql, 'AND targetid IN (\'' + Number(params.target) + '\')');
-        }
-      } else {
-        query = sprintf(sql, ' ');
-      }
-
       options = {
         data: {
-          q: query,
+          q: this.getQuery(params),
           format: 'json'
         },
         reset: true,
@@ -159,16 +146,51 @@ define([
         error: onError
       };
 
-      if (!this.data) {
-        this.getAll(function(err) {
-          if (err) {
-            throw err.responseText;
+      this.fetch(options);
+    },
+
+    getQuery: function(params) {
+      var query;
+      var targets = '';
+      var questions = '';
+      var tlen = params.target.length;
+      var qlen = params.question.length;
+
+      if (params.target !== 'all') {
+        _.each(params.target, function(t, i) {
+          if (i === tlen -1) {
+            targets += '\'' + t +'\'';
+          } else {
+            targets += '\'' + t +'\',';
           }
-          self.fetch(options);
         });
-      } else {
-        this.fetch(options);
       }
+
+      if (params.question !== 'all') {
+        _.each(params.question, function(q, i) {
+          if (i === qlen -1) {
+            questions += '\'' + q +'\'';
+          } else {
+            questions += '\'' + q +'\',';
+          }
+        });
+      }
+
+      if (params) {
+        if (params.question === 'all' && params.target === 'all') {
+          query = sprintf(sql, ' ');
+        } else if (params.question !== 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'AND targetid IN (' + targets + ') AND criterias.questionid IN (' + questions + ')');
+        } else if (params.question !== 'all' && params.target === 'all') {
+          query = sprintf(sql, 'AND criterias.questionid IN (' + questions + ')');
+        } else if (params.question === 'all' && params.target !== 'all') {
+          query = sprintf(sql, 'AND targetid IN (' + targets + ')');
+        }
+      } else {
+        query = sprintf(sql, ' ');
+      }
+
+      return query;
     }
 
   });
