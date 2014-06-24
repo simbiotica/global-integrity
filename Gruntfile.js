@@ -76,6 +76,7 @@ module.exports = function(grunt) {
           '<%= root.dist %>/styles/main.css': [
             '<%= root.app %>/vendor/normalize-css/normalize.css',
             '<%= root.app %>/vendor/cartodb/themes/css/cartodb.css',
+            '<%= root.app %>/vendor/select2/select2.css',
             '<%= root.tmp %>/styles/{,*/}*.css'
           ]
         }
