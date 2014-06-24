@@ -17,6 +17,7 @@ define([
       'click #apply': 'apply',
       'change #targetSelect': 'setQuestionsByTarget',
       //'change #questionSelect' : 'setTargetsByQuestion',
+      'change #questionSelect' : 'setCurrentQuestions',
       'change #toggleCriteria': 'toggleCriteria'
     },
 
@@ -41,8 +42,15 @@ define([
         $('#toggleCriteria').removeAttr('checked');
       }
 
-      this.$el.find('select').select2({
+      $('#targetSelect').select2({
         width: 'element'
+      });
+
+      $('#questionSelect').select2({
+        width: 'element',
+        formatSelection: function(item) {
+          return item.text.slice(0, 3);
+        }
       });
     },
 
@@ -71,29 +79,40 @@ define([
       this.questionId = questionSelect.val();
     },
 
-    setTargetsByQuestion: function() {
-      var self = this;
-      var questionId = $('#questionSelect').val();
-      var targetId = $('#targetSelect').val();
+    // setTargetsByQuestion: function() {
+    //   var self = this;
+    //   var questionId = $('#questionSelect').val();
+    //   var targetId = $('#targetSelect').val();
 
-      $('#targetSelect').html('');
+    //   $('#targetSelect').html('');
 
-      if (questionId !== 'all') {
-        this.model.getTargetsByQuestion(questionId, function(error, model) {
-          if (error) {
-            throw error.responseText;
-          }
-          self.render(model);
-          var questionSelect = $('#questionSelect');
-          var targetSelect = $('#targetSelect');
-          questionSelect.val(questionId);
-          targetSelect.select2('val', targetId);
-          // $('#currentQuestion').text(questionSelect.find('option[value="' + questionId + '"]').text());
-          // $('#currentTarget').text('All targets');
-        });
-      } else {
-        this.getData();
-      }
+    //   if (questionId !== 'all') {
+    //     this.model.getTargetsByQuestion(questionId, function(error, model) {
+    //       if (error) {
+    //         throw error.responseText;
+    //       }
+    //       self.render(model);
+    //       var questionSelect = $('#questionSelect');
+    //       var targetSelect = $('#targetSelect');
+    //       questionSelect.val(questionId);
+    //       targetSelect.select2('val', targetId);
+    //       // $('#currentQuestion').text(questionSelect.find('option[value="' + questionId + '"]').text());
+    //       // $('#currentTarget').text('All targets');
+    //     });
+    //   } else {
+    //     this.getData();
+    //   }
+    // },
+
+    setCurrentQuestions: function() {
+      var questionSelect = $('#questionSelect');
+      var questionsId = questionSelect.val();
+
+      var currentQuestions = _.map(questionsId, function(questionId) {
+        return questionSelect.find('option[value="' + questionId + '"]').text().slice(0, 3);
+      });
+
+      $('#currentQuestion').text(_.str.toSentence(currentQuestions));
     },
 
     setQuestionsByTarget: function() {
