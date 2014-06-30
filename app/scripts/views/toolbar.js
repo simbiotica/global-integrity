@@ -62,6 +62,7 @@ define([
           throw error.responseText;
         }
         self.render(model);
+        Backbone.Events.trigger('spinner:stop');
       });
     },
 
@@ -117,9 +118,13 @@ define([
 
     setQuestionsByTarget: function() {
       var self = this;
-      var targetsId = $('#targetSelect').val();
-      var questionSelect;
-      var targetSelect;
+      var targetSelect = $('#targetSelect');
+      var questionSelect = $('#questionSelect');
+      var targetsId = targetSelect.val();
+
+      questionSelect.select2('enable', false);
+
+      Backbone.Events.trigger('spinner:start');
 
       $('#questionSelect').html('');
 
@@ -132,15 +137,11 @@ define([
           self.render(model);
           questionSelect = $('#questionSelect');
           targetSelect = $('#targetSelect');
-          questionSelect.val('all');
+          questionSelect.select2('val', null);
           targetSelect.select2('val', targetsId);
 
-          var currentTargets = _.map(targetsId, function(targetId) {
-            return targetSelect.find('option[value="' + targetId + '"]').text();
-          });
-
-          $('#currentTarget').text(_.str.toSentence(currentTargets));
-          $('#currentQuestion').text('All targets');
+          questionSelect.select2('enable', true);
+          Backbone.Events.trigger('spinner:stop');
         });
       } else {
         this.getData();
@@ -148,13 +149,37 @@ define([
     },
 
     apply: function() {
-      var questionId = $('#questionSelect').val()|| 'all';
-      var targetId = $('#targetSelect').val() || 'all';
+      var targetSelect = $('#targetSelect');
+      var questionSelect = $('#questionSelect');
+      var questionsId = questionSelect.val();
+      var targetsId = targetSelect.val();
+      var currentTargets = _.map(targetsId, function(targetId) {
+        return targetSelect.find('option[value="' + targetId + '"]').text();
+      });
+      var currentQuestions = _.map(questionsId, function(questionId) {
+        return questionSelect.find('option[value="' + questionId + '"]').text();
+      });
+
+      if (currentTargets.length > 0) {
+        $('#currentTarget').text(_.str.toSentence(currentTargets));
+      } else {
+        $('#currentTarget').text('All targets');
+        targetsId = ['all'];
+      }
+
+      if (currentQuestions.length > 0) {
+        $('#currentQuestion').text(_.str.toSentence(currentQuestions));
+      } else {
+        $('#currentQuestion').text('All questions');
+        questionsId = ['all'];
+      }
 
       Backbone.Events.trigger('toolbar:applied', {
-        question: questionId,
-        target: targetId
+        question: questionsId,
+        target: targetsId
       });
+
+      Backbone.Events.trigger('spinner:start');
     },
 
     toggleCriteria: function(ev) {
