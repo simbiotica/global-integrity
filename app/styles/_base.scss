@@ -39,7 +39,7 @@ a {
 }
 
 p {
-  line-height: 18px;
+  line-height: 1.4;
   a {
     color: $primary-color;
   }
@@ -54,15 +54,17 @@ a, button, input, select, textarea {
 .title {
   font-size: $site-font-size + 23;
   font-weight: bold;
+  margin: 10px 0;
 }
 .subtitle {
   font-size: $site-font-size + 8;
-  font-weight: normal;
+  font-weight: lighter;
+  margin: 5px 0;
   span { font-weight: 700;}
 }
 .target-title {
   font-size: $site-font-size + 8;
-  line-height: 1.5em
+  margin: 10px 0 0;
 }
 input, button {
   font-family: $site-font-family;

@@ -84,7 +84,9 @@ define([
       this.getAll(function(error, model) {
         var questions = [];
 
-        if (targets && targets.length > 0) {
+        if (_.contains(targets, 'all')) {
+          questions = model.toJSON().questions;
+        } else if (targets && targets.length > 0) {
           _.each(targets, function(targetId) {
             var result = _.filter(model.toJSON().questions, function(question) {
               return _.where(question.targets, {

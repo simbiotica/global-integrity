@@ -26,6 +26,7 @@ define([
         categories: (data.length === 0) ? null : data
       }));
       this.toggleIntro();
+      Backbone.Events.trigger('spinner:stop');
     },
 
     getData: function(params) {
