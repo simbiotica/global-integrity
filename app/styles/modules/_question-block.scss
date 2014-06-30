@@ -1,5 +1,5 @@
 .mod-question-block {
-  ul { margin: 0; padding: 0;}
+  ul { margin-bottom: 0; padding: 0;}
   li {
     margin-bottom: 20px;
     list-style: none;
@@ -9,7 +9,6 @@
     }
   }
   .result {
-    margin-bottom: 30px;
     p {
       word-wrap: break-word;
     }
@@ -18,7 +17,7 @@
     display: block;
     width: 40px;
     height: 40px;
-    margin: 20px auto 0 auto;
+    margin: 3px auto 0 auto;
     border-radius: 50%;
     font-size: $site-font-size +8;
     font-weight: bold;
@@ -33,6 +32,7 @@
   }
   article {
     &:first-of-type { border-top: none;}
+    margin-bottom: 20px;
   }
 }
 

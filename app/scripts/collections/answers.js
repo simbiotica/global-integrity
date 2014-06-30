@@ -158,7 +158,7 @@ define([
       var tlen = params.target.length;
       var qlen = params.question.length;
 
-      if (params.target !== 'all') {
+      if (!_.contains(params.target, 'all')) {
         _.each(params.target, function(t, i) {
           if (i === tlen -1) {
             targets += '\'' + t +'\'';
@@ -166,9 +166,11 @@ define([
             targets += '\'' + t +'\',';
           }
         });
+      } else {
+        params.target = 'all';
       }
 
-      if (params.question !== 'all') {
+      if (!_.contains(params.question, 'all')) {
         _.each(params.question, function(q, i) {
           if (i === qlen -1) {
             questions += '\'' + q +'\'';
@@ -176,6 +178,8 @@ define([
             questions += '\'' + q +'\',';
           }
         });
+      } else {
+        params.question = 'all';
       }
 
       if (params) {

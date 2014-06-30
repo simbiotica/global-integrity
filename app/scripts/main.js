@@ -10,7 +10,8 @@ require.config({
     text: '../vendor/requirejs-text/text',
     sprintf: '../vendor/sprintf/src/sprintf',
     select2: '../vendor/select2/select2',
-    _string: '../vendor/underscore.string/dist/underscore.string.min'
+    _string: '../vendor/underscore.string/dist/underscore.string.min',
+    spin: '../vendor/spinjs/spin'
   },
 
   shim: {
@@ -37,6 +38,9 @@ require.config({
     _string: {
       deps: ['underscore'],
       exports: '_'
+    },
+    spin: {
+      exports: 'Spinner'
     }
   }
 
@@ -44,8 +48,9 @@ require.config({
 
 require([
   'views/toolbar',
-  'views/result'
-], function(ToolbarView, ResultView) {
+  'views/result',
+  'views/spin'
+], function(ToolbarView, ResultView, SpinView) {
 
   // Extensions
   Number.prototype.toCommas = function() {
@@ -58,5 +63,6 @@ require([
 
   new ToolbarView();
   new ResultView();
+  new SpinView();
 
 });
