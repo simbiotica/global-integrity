@@ -15,8 +15,8 @@ define([
 
     events: {
       'click #apply': 'apply',
-      'change #targetSelect': 'setQuestionsByTarget',
-      //'change #questionSelect' : 'setTargetsByQuestion',
+      // 'change #targetSelect': 'setQuestionsByTarget',
+      // 'change #questionSelect' : 'setTargetsByQuestion',
       'change #questionSelect' : 'setCurrentQuestions',
       'change #toggleCriteria': 'toggleCriteria'
     },
