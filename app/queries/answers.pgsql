@@ -51,7 +51,7 @@ GROUP BY questionid, criterias
 -- ORDER BY targetid
 ) criterias
 
-where dnorm.questionid = criterias.questionid::text
+where dnorm.questionid::text = criterias.questionid::text
 
 -- and targetid='117' and criterias.questionid='8929'
 
